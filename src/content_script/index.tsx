@@ -2,7 +2,7 @@ import '@webcomponents/webcomponentsjs'
 import * as utils from '../common/utils'
 import React from 'react'
 import icon from './assets/images/icon.png'
-import { popupCardID, popupThumbID, zIndex } from './consts'
+import { popupCardID, popupCardMaxWidth, popupCardMinWidth, popupThumbID, zIndex } from './consts'
 import { PopupCard } from './PopupCard'
 import { getContainer, queryPopupCardElement, queryPopupThumbElement } from './utils'
 import { create } from 'jss'
@@ -71,8 +71,8 @@ async function showPopupCard(x: number, y: number, text: string, autoFocus: bool
         $popupCard.style.background = '#fff'
         $popupCard.style.borderRadius = '4px'
         $popupCard.style.boxShadow = '0 0 8px rgba(0,0,0,.3)'
-        $popupCard.style.minWidth = '200px'
-        $popupCard.style.maxWidth = '600px'
+        $popupCard.style.minWidth = `${popupCardMinWidth}px`
+        $popupCard.style.maxWidth = `${popupCardMaxWidth}px`
         $popupCard.style.lineHeight = '1.6'
         $popupCard.style.fontSize = '13px'
         $popupCard.style.color = '#333'
@@ -91,7 +91,8 @@ async function showPopupCard(x: number, y: number, text: string, autoFocus: bool
     $popupCard.style.width = 'auto'
     $popupCard.style.height = 'auto'
     $popupCard.style.opacity = '100'
-    $popupCard.style.left = `${x}px`
+    $popupCard.style.left = x + 600 > window.innerWidth ? 'auto' : `${x}px`
+    $popupCard.style.right = x + 600 > window.innerWidth ? '18px' : 'unset'
     $popupCard.style.top = `${y}px`
     const engine = new Styletron({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
